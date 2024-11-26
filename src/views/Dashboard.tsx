@@ -11,16 +11,31 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { MonitoringPrice } from "@/components/charts/MonitoringPrice";
 import { useState } from "react";
 import DropdownSelect from "@/components/DropdownSelect/DropdownSelect";
-import { useCryptoList } from "@/hooks/useCryptoData";
+import { useCryptoList, useSupportedVsCurrencies } from "@/hooks/useCryptoData";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
   const [currency, setCurrency] = useState("EUR");
   const [cryptoId, setCryptoId] = useState("marinade");
-  const { data: cryptoList, isLoading, error } = useCryptoList();
+  const {
+    data: cryptoList,
+    isLoading: isCryptoListLoading,
+    error: cryptoListError,
+  } = useCryptoList();
+  const {
+    data: supportedCurrencies,
+    isLoading: isCurrenciesLoading,
+    error: currenciesError,
+  } = useSupportedVsCurrencies();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading crypto list</div>;
+  if (isCryptoListLoading || isCurrenciesLoading) return <div>Loading...</div>;
+  if (cryptoListError) return <div>Error loading crypto list</div>;
+  if (currenciesError) return <div>Error loading supported currencies</div>;
+
+  const currencyOptions = supportedCurrencies.map((currency: string) => ({
+    label: currency.toUpperCase(),
+    value: currency.toUpperCase(),
+  }));
 
   const dayOptions = [
     { label: "Últimos 7 dias", value: 7 },
@@ -28,11 +43,6 @@ export const Dashboard = () => {
     { label: "Últimos 90 dias", value: 90 },
   ];
 
-  const currencyOptions = [
-    { label: "EUR", value: "EUR" },
-    { label: "USD", value: "USD" },
-    { label: "GBP", value: "GBP" },
-  ];
   return (
     <MainLayout>
       <Breadcrumb>
