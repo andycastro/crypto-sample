@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MainLayout from "@/components/layouts/MainLayout";
-import TestComponent from "@/components/charts/TestComponent";
+import { MonitoringPrice } from "@/components/charts/MonitoringPrice";
 
 export const Dashboard = () => {
   return (
@@ -23,12 +23,14 @@ export const Dashboard = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div>
+      <div className="py-6">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
         <p className="text-gray-500">
           Welcome to the Crypto Fetching Dashboard.
         </p>
-        <TestComponent />
+        <div className="py-6">
+          <MonitoringPrice cryptoId="bitcoin" currency="USD" days={7} />
+        </div>
       </div>
     </MainLayout>
   );
