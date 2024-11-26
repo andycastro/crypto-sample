@@ -1,3 +1,5 @@
+import MainLayout from "@/components/layouts/MainLayout";
+
 export const Dashboard = () => {
-  return <h1>Dashboard</h1>;
+  return <MainLayout>Dashboard</MainLayout>;
 };
