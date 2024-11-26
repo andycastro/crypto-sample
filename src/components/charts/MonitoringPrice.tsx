@@ -1,6 +1,7 @@
 import React from "react";
 import { useCryptoMarketData } from "../../hooks/useCryptoData";
 import Chart from "react-apexcharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface MonitoringPriceProps {
   cryptoId: string;
@@ -61,5 +62,14 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
     },
   ];
 
-  return <Chart options={options} series={series} type="line" />;
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Preço atualizado</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Chart options={options} series={series} type="line" />
+      </CardContent>
+    </Card>
+  );
 };
