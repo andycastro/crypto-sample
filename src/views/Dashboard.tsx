@@ -11,11 +11,16 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { MonitoringPrice } from "@/components/charts/MonitoringPrice";
 import { useState } from "react";
 import DropdownSelect from "@/components/DropdownSelect/DropdownSelect";
+import { useCryptoList } from "@/hooks/useCryptoData";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
   const [currency, setCurrency] = useState("EUR");
   const [cryptoId, setCryptoId] = useState("marinade");
+  const { data: cryptoList, isLoading, error } = useCryptoList();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading crypto list</div>;
 
   const dayOptions = [
     { label: "Últimos 7 dias", value: 7 },
@@ -28,13 +33,6 @@ export const Dashboard = () => {
     { label: "USD", value: "USD" },
     { label: "GBP", value: "GBP" },
   ];
-
-  const cryptoOptions = [
-    { label: "Marinade", value: "marinade" },
-    { label: "Bitcoin", value: "bitcoin" },
-    { label: "Ethereum", value: "ethereum" },
-  ];
-
   return (
     <MainLayout>
       <Breadcrumb>
@@ -67,12 +65,14 @@ export const Dashboard = () => {
               value={currency}
               onChange={(value) => setCurrency(value.toString())}
             />
-            <DropdownSelect
-              label="Selecione a criptomoeda..."
-              options={cryptoOptions}
-              value={cryptoId}
-              onChange={(value) => setCryptoId(value.toString())}
-            />
+            <div>
+              <DropdownSelect
+                label="Selecione a criptomoeda..."
+                options={cryptoList}
+                value={cryptoId}
+                onChange={(value) => setCryptoId(value.toString())}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
             <MonitoringPrice
