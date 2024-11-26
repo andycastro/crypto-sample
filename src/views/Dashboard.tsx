@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MainLayout from "@/components/layouts/MainLayout";
+import TestComponent from "@/components/charts/TestComponent";
 
 export const Dashboard = () => {
   return (
@@ -27,6 +28,7 @@ export const Dashboard = () => {
         <p className="text-gray-500">
           Welcome to the Crypto Fetching Dashboard.
         </p>
+        <TestComponent />
       </div>
     </MainLayout>
   );
