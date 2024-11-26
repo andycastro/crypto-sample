@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FixedSizeList as List } from "react-window";
 
 import {
   Popover,
@@ -30,6 +31,39 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
   onChange,
 }) => {
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const Row = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: React.CSSProperties;
+  }) => {
+    const option = filteredOptions[index];
+    return (
+      <div style={style} key={option.value}>
+        <CommandItem
+          value={option.value.toString()}
+          onSelect={(currentValue) => {
+            onChange(currentValue === value.toString() ? "" : currentValue);
+            setOpen(false);
+          }}
+        >
+          {option.label}
+          <Check
+            className={`ml-auto ${
+              value === option.value ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </CommandItem>
+      </div>
+    );
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -48,29 +82,22 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-[200px] p-0">
         <Command>
-          <CommandInput placeholder={`Search ${label.toLowerCase()}...`} />
+          <CommandInput
+            placeholder={`Search ${label.toLowerCase()}...`}
+            value={searchTerm}
+            onValueChange={setSearchTerm}
+          />
           <CommandList>
             <CommandEmpty>No {label.toLowerCase()} found.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  value={option.value.toString()}
-                  onSelect={(currentValue) => {
-                    onChange(
-                      currentValue === value.toString() ? "" : currentValue
-                    );
-                    setOpen(false);
-                  }}
-                >
-                  {option.label}
-                  <Check
-                    className={`ml-auto ${
-                      value === option.value ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                </CommandItem>
-              ))}
+              <List
+                height={200}
+                itemCount={filteredOptions.length}
+                itemSize={35}
+                width="100%"
+              >
+                {Row}
+              </List>
             </CommandGroup>
           </CommandList>
         </Command>
