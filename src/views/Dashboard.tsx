@@ -54,7 +54,7 @@ export const Dashboard = () => {
           Welcome to the Crypto Fetching Dashboard.
         </p>
         <div className="py-6">
-          <div className="w-[400px]">
+          <div className="w-full flex justify-end space-x-5">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -103,7 +103,15 @@ export const Dashboard = () => {
                 </Command>
               </PopoverContent>
             </Popover>
+          </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+            <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
+
+            <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
+            <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
+            <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
+            <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
             <MonitoringPrice cryptoId="marinade" currency="EUR" days={days} />
           </div>
         </div>
