@@ -2,6 +2,7 @@ import {
   fetchCryptoPrice,
   fetchCryptoMarketData,
   fetchCryptoList,
+  fetchSupportedVsCurrencies,
 } from "../services/cryptoService";
 
 export const getCryptoPriceUseCase = async (
@@ -51,6 +52,16 @@ export const getCryptoListUseCase = async () => {
     return cryptoOptions;
   } catch (error) {
     console.error("Erro ao obter lista de criptomoedas:", error);
+    throw error;
+  }
+};
+
+export const getSupportedVsCurrenciesUseCase = async () => {
+  try {
+    const currencies = await fetchSupportedVsCurrencies();
+    return currencies;
+  } catch (error) {
+    console.error("Erro ao obter moedas suportadas:", error);
     throw error;
   }
 };

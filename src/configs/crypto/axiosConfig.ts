@@ -28,3 +28,8 @@ export const getCryptoList = async () => {
   const response = await axiosInstance.get("coins/list");
   return response.data;
 };
+
+export const getSupportedVsCurrencies = async () => {
+  const response = await axiosInstance.get("simple/supported_vs_currencies");
+  return response.data;
+};
