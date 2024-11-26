@@ -1,10 +1,10 @@
 import axiosInstance from "../axiosInstanceConfig";
 
 export const getCryptoPrice = async (cryptoId: string, currency: string) => {
-  const response = await axiosInstance.get("simple/price", {
+  const response = await axiosInstance.get(`coins/${cryptoId}/market_chart`, {
     params: {
-      ids: cryptoId,
-      vs_currencies: currency,
+      vs_currency: currency,
+      days: 1,
     },
   });
   return response.data;
