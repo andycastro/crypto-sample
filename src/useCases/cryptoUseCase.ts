@@ -1,6 +1,7 @@
 import {
   fetchCryptoPrice,
   fetchCryptoMarketData,
+  fetchCryptoList,
 } from "../services/cryptoService";
 
 export const getCryptoPriceUseCase = async (
@@ -26,6 +27,30 @@ export const getCryptoMarketDataUseCase = async (
     return marketData;
   } catch (error) {
     console.error("Erro ao obter dados do mercado:", error);
+    throw error;
+  }
+};
+
+export const getCryptoListUseCase = async () => {
+  try {
+    const list = await fetchCryptoList();
+    interface Crypto {
+      id: string;
+      name: string;
+    }
+
+    interface CryptoOption {
+      label: string;
+      value: string;
+    }
+
+    const cryptoOptions: CryptoOption[] = list.map((crypto: Crypto) => ({
+      label: crypto.name,
+      value: crypto.id,
+    }));
+    return cryptoOptions;
+  } catch (error) {
+    console.error("Erro ao obter lista de criptomoedas:", error);
     throw error;
   }
 };

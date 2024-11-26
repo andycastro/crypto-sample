@@ -1,6 +1,7 @@
 import {
   getCryptoPrice,
   getCryptoMarketChart,
+  getCryptoList,
 } from "../configs/crypto/axiosConfig";
 
 export const fetchCryptoPrice = async (cryptoId: string, currency: string) => {
@@ -13,4 +14,8 @@ export const fetchCryptoMarketData = async (
   days: number
 ) => {
   return await getCryptoMarketChart(cryptoId, currency, days);
+};
+
+export const fetchCryptoList = async () => {
+  return await getCryptoList();
 };

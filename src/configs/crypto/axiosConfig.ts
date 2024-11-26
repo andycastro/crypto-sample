@@ -23,3 +23,8 @@ export const getCryptoMarketChart = async (
   });
   return response.data;
 };
+
+export const getCryptoList = async () => {
+  const response = await axiosInstance.get("coins/list");
+  return response.data;
+};
