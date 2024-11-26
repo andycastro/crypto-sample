@@ -1,17 +1,9 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-
 import MainLayout from "@/components/layouts/MainLayout";
 import { MonitoringPrice } from "@/components/charts/MonitoringPrice";
 import { useState } from "react";
-import DropdownSelect from "@/components/DropdownSelect/DropdownSelect";
 import { useCryptoList, useSupportedVsCurrencies } from "@/hooks/useCryptoData";
+import { TitlePage } from "@/components/TitlePage/TitlePage";
+import { FilterBar } from "@/components/FilterBar/FilterBar";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -45,44 +37,22 @@ export const Dashboard = () => {
 
   return (
     <MainLayout>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem className="hidden md:block">
-            <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator className="hidden md:block" />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Crypto Fetching</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
       <div className="py-6">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-gray-500">
-          Welcome to the Crypto Fetching Dashboard.
-        </p>
+        <TitlePage
+          title="Dashboard"
+          subtitle="Welcome to the Crypto Fetching Dashboard."
+        />
+
         <div className="py-6">
           <div className="w-full flex justify-end space-x-5">
-            <DropdownSelect
-              label="Selecione o período..."
-              options={dayOptions}
-              value={days}
-              onChange={(value) => setDays(Number(value))}
+            <FilterBar
+              dayOptions={dayOptions}
+              selectedDay={{ value: days, setValue: setDays }}
+              currencyOptions={currencyOptions}
+              selectedCurrency={{ value: currency, setValue: setCurrency }}
+              cryptoList={cryptoList}
+              selectedCrypto={{ value: cryptoId, setValue: setCryptoId }}
             />
-            <DropdownSelect
-              label="Selecione a moeda..."
-              options={currencyOptions}
-              value={currency}
-              onChange={(value) => setCurrency(value.toString())}
-            />
-            <div>
-              <DropdownSelect
-                label="Selecione a criptomoeda..."
-                options={cryptoList}
-                value={cryptoId}
-                onChange={(value) => setCryptoId(value.toString())}
-              />
-            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
             <MonitoringPrice
