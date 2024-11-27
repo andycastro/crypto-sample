@@ -1,6 +1,7 @@
 import { useCryptoPriceChange } from "../../hooks/useCryptoData";
 import ReactApexChart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { formatPercentage } from "@/utils/formatNumbers/percent";
 
 interface PercentageChangeProps {
   cryptoId: string;
@@ -47,6 +48,9 @@ export const PercentageChange: React.FC<PercentageChangeProps> = ({
           value: {
             offsetY: -2,
             fontSize: "22px",
+            formatter: function (val: number) {
+              return formatPercentage(val);
+            },
           },
         },
       },
@@ -73,7 +77,9 @@ export const PercentageChange: React.FC<PercentageChangeProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Variação percentual ao vivo</CardTitle>
+        <CardTitle>
+          Variação percentual ao vivo (%) {cryptoId.toUpperCase()}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ReactApexChart options={options} series={series} type="radialBar" />
