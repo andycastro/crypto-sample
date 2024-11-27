@@ -49,7 +49,7 @@ export const PercentageChange: React.FC<PercentageChangeProps> = ({
             offsetY: -2,
             fontSize: "22px",
             formatter: function (val: number) {
-              return formatPercentage(val);
+              return `${formatPercentage(val)}%`;
             },
           },
         },

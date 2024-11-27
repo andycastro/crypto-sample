@@ -2,6 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useTopGainingCoins } from "../../hooks/useCryptoData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatPercentage } from "@/utils/formatNumbers/percent";
 
 interface Coin {
   id: string;
@@ -29,16 +30,12 @@ export const TopGainingCoins = ({ currency }: TopGainingCoinsProps) => {
     },
     dataLabels: {
       enabled: true,
-      formatter: (val: number): string => `${val}%`,
+      formatter: (val: number): string => `${formatPercentage(val)}%`,
     },
     xaxis: {
       categories: [] as string[],
     },
     colors: ["#00E396"],
-    title: {
-      text: "Top 5 Moedas - Maior Alta em 24h",
-      align: "center" as const,
-    },
   });
 
   const [chartSeries, setChartSeries] = React.useState([

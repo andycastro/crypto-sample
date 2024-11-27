@@ -37,10 +37,6 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
         },
       },
     },
-    title: {
-      text: "Preço do Bitcoin",
-      align: "center" as const,
-    },
     xaxis: {
       type: "datetime" as const,
     },
@@ -65,7 +61,7 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Preço atualizado</CardTitle>
+        <CardTitle>Preço atualizado do {cryptoId.toUpperCase()}</CardTitle>
       </CardHeader>
       <CardContent>
         <Chart options={options} series={series} type="line" />

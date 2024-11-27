@@ -69,18 +69,15 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Volume</CardTitle>
+        <CardTitle>Comparação de Market Cap</CardTitle>
       </CardHeader>
       <CardContent>
-        <div id="chart">
-          <ReactApexChart
-            options={chartConfig.options}
-            series={chartConfig.series}
-            type="bar"
-            height={350}
-          />
-        </div>
-        <div id="html-dist"></div>
+        <ReactApexChart
+          options={chartConfig.options}
+          series={chartConfig.series}
+          type="bar"
+          height={350}
+        />
       </CardContent>
     </Card>
   );

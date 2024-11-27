@@ -81,7 +81,7 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Volume</CardTitle>
+        <CardTitle>Volume de negociação {cryptoId.toUpperCase()}</CardTitle>
       </CardHeader>
       <CardContent>
         <div id="chart">

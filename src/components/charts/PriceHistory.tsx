@@ -7,6 +7,9 @@ interface PriceHistoryProps {
   cryptoId: string;
   days: number;
 }
+interface PriceData {
+  prices: [number, number][];
+}
 
 export const PriceHistory: React.FC<PriceHistoryProps> = ({
   cryptoId,
@@ -31,10 +34,6 @@ export const PriceHistory: React.FC<PriceHistoryProps> = ({
         },
       },
     },
-    title: {
-      text: "Histórico de Preços",
-      align: "center" as const,
-    },
     xaxis: {
       type: "datetime" as const,
     },
@@ -44,10 +43,6 @@ export const PriceHistory: React.FC<PriceHistoryProps> = ({
       },
     },
   };
-
-  interface PriceData {
-    prices: [number, number][];
-  }
 
   const series: { name: string; data: [number, number][] }[] = [
     {
@@ -59,7 +54,7 @@ export const PriceHistory: React.FC<PriceHistoryProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Histórico de Preços</CardTitle>
+        <CardTitle>Evolução do preço {cryptoId.toUpperCase()}</CardTitle>
       </CardHeader>
       <CardContent>
         <Chart options={options} series={series} type="line" />
