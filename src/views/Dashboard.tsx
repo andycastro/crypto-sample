@@ -7,6 +7,7 @@ import { FilterBar } from "@/components/FilterBar/FilterBar";
 import { UpdateVolume } from "@/components/charts/UpdateVolume";
 import { TopGainingCoins } from "@/components/charts/TopGainingCoins";
 import { MarketCap } from "@/components/charts/MarketCap";
+import { PriceHistory } from "@/components/charts/PriceHistory";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -27,10 +28,11 @@ export const Dashboard = () => {
   if (cryptoListError) return <div>Error loading crypto list</div>;
   if (currenciesError) return <div>Error loading supported currencies</div>;
 
-  const currencyOptions = supportedCurrencies.map((currency: string) => ({
-    label: currency.toUpperCase(),
-    value: currency.toUpperCase(),
-  }));
+  const currencyOptions =
+    supportedCurrencies?.map((currency: string) => ({
+      label: currency.toUpperCase(),
+      value: currency.toUpperCase(),
+    })) || [];
 
   const dayOptions = [
     { label: "Últimos 7 dias", value: 7 },
@@ -64,16 +66,7 @@ export const Dashboard = () => {
               days={days}
             />
             <UpdateVolume cryptoId={cryptoId} currency={currency} days={days} />
-            <MonitoringPrice
-              cryptoId={cryptoId}
-              currency={currency}
-              days={days}
-            />
-            <MonitoringPrice
-              cryptoId={cryptoId}
-              currency={currency}
-              days={days}
-            />
+            <PriceHistory cryptoId={cryptoId} days={days} />
             <MarketCap currency={currency} />
             <TopGainingCoins currency={currency} />
           </div>
