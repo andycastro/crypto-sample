@@ -3,6 +3,7 @@ import {
   fetchCryptoList,
   fetchSupportedVsCurrencies,
   fetchTopGainingCoins,
+  fetchMarketCapData,
 } from "../services/cryptoService";
 
 export const getCryptoMarketDataUseCase = async (
@@ -59,6 +60,16 @@ export const getTopGainingCoinsUseCase = async (currency: string) => {
     return topGainingCoins;
   } catch (error) {
     console.error("Erro ao obter as moedas com maior ganho:", error);
+    throw error;
+  }
+};
+
+export const getMarketCapDataUseCase = async (currency: string) => {
+  try {
+    const marketCapData = await fetchMarketCapData(currency);
+    return marketCapData;
+  } catch (error) {
+    console.error("Erro ao obter dados de capitalização de mercado:", error);
     throw error;
   }
 };

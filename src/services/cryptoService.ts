@@ -3,6 +3,7 @@ import {
   getCryptoList,
   getSupportedVsCurrencies,
   getTopGainingCoins,
+  getMarketCapData,
 } from "../configs/crypto/axiosConfig";
 
 export const fetchCryptoMarketData = async (
@@ -23,4 +24,8 @@ export const fetchSupportedVsCurrencies = async () => {
 
 export const fetchTopGainingCoins = async (currency: string) => {
   return await getTopGainingCoins(currency);
+};
+
+export const fetchMarketCapData = async (currency: string) => {
+  return await getMarketCapData(currency);
 };
