@@ -2,6 +2,7 @@ import {
   fetchCryptoMarketData,
   fetchCryptoList,
   fetchSupportedVsCurrencies,
+  fetchTopGainingCoins,
 } from "../services/cryptoService";
 
 export const getCryptoMarketDataUseCase = async (
@@ -48,6 +49,16 @@ export const getSupportedVsCurrenciesUseCase = async () => {
     return currencies;
   } catch (error) {
     console.error("Erro ao obter moedas suportadas:", error);
+    throw error;
+  }
+};
+
+export const getTopGainingCoinsUseCase = async (currency: string) => {
+  try {
+    const topGainingCoins = await fetchTopGainingCoins(currency);
+    return topGainingCoins;
+  } catch (error) {
+    console.error("Erro ao obter as moedas com maior ganho:", error);
     throw error;
   }
 };

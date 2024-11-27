@@ -23,3 +23,14 @@ export const getSupportedVsCurrencies = async () => {
   const response = await axiosInstance.get("simple/supported_vs_currencies");
   return response.data;
 };
+
+export const getTopGainingCoins = async (currency: string) => {
+  const response = await axiosInstance.get("coins/markets", {
+    params: {
+      vs_currency: currency,
+      order: "percent_change_24h_desc",
+      per_page: 5,
+    },
+  });
+  return response.data;
+};

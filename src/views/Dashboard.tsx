@@ -5,6 +5,7 @@ import { useCryptoList, useSupportedVsCurrencies } from "@/hooks/useCryptoData";
 import { TitlePage } from "@/components/TitlePage/TitlePage";
 import { FilterBar } from "@/components/FilterBar/FilterBar";
 import { UpdateVolume } from "@/components/charts/UpdateVolume";
+import { TopGainingCoins } from "@/components/charts/TopGainingCoins";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -77,11 +78,7 @@ export const Dashboard = () => {
               currency={currency}
               days={days}
             />
-            <MonitoringPrice
-              cryptoId={cryptoId}
-              currency={currency}
-              days={days}
-            />
+            <TopGainingCoins currency={currency} />
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import {
   getCryptoMarketDataUseCase,
   getCryptoListUseCase,
   getSupportedVsCurrenciesUseCase,
+  getTopGainingCoinsUseCase,
 } from "../useCases/cryptoUseCase";
 
 export const useCryptoMarketData = (
@@ -34,4 +35,10 @@ export const useCryptoList = () => {
 
 export const useSupportedVsCurrencies = () => {
   return useQuery("supportedVsCurrencies", getSupportedVsCurrenciesUseCase);
+};
+
+export const useTopGainingCoins = (currency: string) => {
+  return useQuery(["topGainingCoins", currency], () =>
+    getTopGainingCoinsUseCase(currency)
+  );
 };
