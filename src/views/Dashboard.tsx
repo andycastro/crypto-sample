@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCryptoList, useSupportedVsCurrencies } from "@/hooks/useCryptoData";
 import { TitlePage } from "@/components/TitlePage/TitlePage";
 import { FilterBar } from "@/components/FilterBar/FilterBar";
+import { UpdateVolume } from "@/components/charts/UpdateVolume";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -60,11 +61,7 @@ export const Dashboard = () => {
               currency={currency}
               days={days}
             />
-            <MonitoringPrice
-              cryptoId={cryptoId}
-              currency={currency}
-              days={days}
-            />
+            <UpdateVolume cryptoId={cryptoId} currency={currency} days={days} />
             <MonitoringPrice
               cryptoId={cryptoId}
               currency={currency}
