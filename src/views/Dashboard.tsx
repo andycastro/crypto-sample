@@ -8,6 +8,7 @@ import { UpdateVolume } from "@/components/charts/UpdateVolume";
 import { TopGainingCoins } from "@/components/charts/TopGainingCoins";
 import { MarketCap } from "@/components/charts/MarketCap";
 import { PriceHistory } from "@/components/charts/PriceHistory";
+import { PercentageChange } from "@/components/charts/PercentageChange";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -66,6 +67,7 @@ export const Dashboard = () => {
               days={days}
             />
             <UpdateVolume cryptoId={cryptoId} currency={currency} days={days} />
+            <PercentageChange cryptoId={cryptoId} />
             <PriceHistory cryptoId={cryptoId} days={days} />
             <MarketCap currency={currency} />
             <TopGainingCoins currency={currency} />
