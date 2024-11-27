@@ -35,7 +35,7 @@ export const FilterBar = ({
     }
   };
   return (
-    <>
+    <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
       <DropdownSelect
         label="Selecione o período..."
         options={dayOptions}
@@ -54,6 +54,6 @@ export const FilterBar = ({
         value={selectedCrypto.value}
         onChange={handleCryptoChange}
       />
-    </>
+    </div>
   );
 };

@@ -9,6 +9,8 @@ import { TopGainingCoins } from "@/components/charts/TopGainingCoins";
 import { MarketCap } from "@/components/charts/MarketCap";
 import { PriceHistory } from "@/components/charts/PriceHistory";
 import { PercentageChange } from "@/components/charts/PercentageChange";
+import { MainSkeleton } from "@/components/Skeleton/MainSkeleton";
+import { ErrorState } from "@/components/ErrorState/ErrorState";
 
 export const Dashboard = () => {
   const [days, setDays] = useState(30);
@@ -18,16 +20,14 @@ export const Dashboard = () => {
     data: cryptoList,
     isLoading: isCryptoListLoading,
     error: cryptoListError,
+    refetch,
   } = useCryptoList();
-  const {
-    data: supportedCurrencies,
-    isLoading: isCurrenciesLoading,
-    error: currenciesError,
-  } = useSupportedVsCurrencies();
+  const { data: supportedCurrencies, isLoading: isCurrenciesLoading } =
+    useSupportedVsCurrencies();
 
-  if (isCryptoListLoading || isCurrenciesLoading) return <div>Loading...</div>;
-  if (cryptoListError) return <div>Error loading crypto list</div>;
-  if (currenciesError) return <div>Error loading supported currencies</div>;
+  if (isCryptoListLoading || isCurrenciesLoading) return <MainSkeleton />;
+  if (cryptoListError)
+    return <ErrorState text="Error loading crypto list" onRetry={refetch} />;
 
   const currencyOptions =
     supportedCurrencies?.map((currency: string) => ({

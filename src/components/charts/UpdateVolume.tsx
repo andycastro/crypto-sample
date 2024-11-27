@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCryptoMarketData } from "../../hooks/useCryptoData";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface UpdateVolumeProps {
   cryptoId: string;
@@ -14,7 +16,7 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
   currency,
   days,
 }) => {
-  const { data, error, isLoading } = useCryptoMarketData(
+  const { data, error, isLoading, refetch } = useCryptoMarketData(
     cryptoId,
     currency,
     days
@@ -75,8 +77,8 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
     }
   }, [data]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error) return <ErrorState text="Error loading data" onRetry={refetch} />;
 
   return (
     <Card>

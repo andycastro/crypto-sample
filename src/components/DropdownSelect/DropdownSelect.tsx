@@ -91,11 +91,11 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full max-w-[250px] justify-between"
+          className="w-full min-w-[300px] max-w-[250px] sm:max-w-[300px] md:max-w-[350px] justify-between"
         >
           <div className="overflow-hidden w-full">
             <div className="flex justify-between">
-              <div className="flex-1">
+              <div className="flex-1 truncate">
                 {isMultiSelect
                   ? Array.isArray(value) && value.length > 0
                     ? value

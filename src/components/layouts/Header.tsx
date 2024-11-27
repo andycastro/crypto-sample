@@ -33,9 +33,15 @@ export const Header = () => {
         <div className="flex items-center gap-2">
           <button onClick={toggleDarkMode} aria-label="Toggle dark mode">
             {isDarkMode ? (
-              <Sun className="h-4 w-4" />
+              <div className="flex items-center space-x-2">
+                <div className="text-sm ">Ativar modo claro</div>
+                <Sun className="h-6 w-6 border rounded p-1 hover:bg-gray-200 transition-colors duration-200" />
+              </div>
             ) : (
-              <Moon className="h-4 w-4" />
+              <div className="flex items-center space-x-2">
+                <div className="text-sm"> Ativar modo dark</div>
+                <Moon className="h-6 w-6 border rounded p-1 hover:bg-gray-200 transition-colors duration-200" />
+              </div>
             )}
           </button>
           <Avatar>

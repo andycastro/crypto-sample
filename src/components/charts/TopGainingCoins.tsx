@@ -3,6 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import { useTopGainingCoins } from "../../hooks/useCryptoData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPercentage } from "@/utils/formatNumbers/percent";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface Coin {
   id: string;
@@ -15,7 +17,7 @@ interface TopGainingCoinsProps {
 }
 
 export const TopGainingCoins = ({ currency }: TopGainingCoinsProps) => {
-  const { data, isLoading, error } = useTopGainingCoins(currency);
+  const { data, isLoading, error, refetch } = useTopGainingCoins(currency);
 
   const [chartOptions, setChartOptions] = React.useState({
     chart: {
@@ -68,8 +70,9 @@ export const TopGainingCoins = ({ currency }: TopGainingCoinsProps) => {
     }
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading top gaining coins</p>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error) return <ErrorState text="Error loading data" onRetry={refetch} />;
+  console.log("error", error);
 
   return (
     <Card>

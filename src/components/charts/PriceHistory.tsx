@@ -2,6 +2,8 @@ import React from "react";
 import { useCryptoMarketData } from "../../hooks/useCryptoData";
 import Chart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface PriceHistoryProps {
   cryptoId: string;
@@ -15,10 +17,14 @@ export const PriceHistory: React.FC<PriceHistoryProps> = ({
   cryptoId,
   days,
 }) => {
-  const { data, error, isLoading } = useCryptoMarketData(cryptoId, "usd", days);
+  const { data, error, isLoading, refetch } = useCryptoMarketData(
+    cryptoId,
+    "usd",
+    days
+  );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error) return <ErrorState text="Error loading data" onRetry={refetch} />;
 
   const options = {
     chart: {

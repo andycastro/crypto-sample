@@ -2,6 +2,8 @@ import { useCryptoPriceChange } from "../../hooks/useCryptoData";
 import ReactApexChart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { formatPercentage } from "@/utils/formatNumbers/percent";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface PercentageChangeProps {
   cryptoId: string;
@@ -10,10 +12,10 @@ interface PercentageChangeProps {
 export const PercentageChange: React.FC<PercentageChangeProps> = ({
   cryptoId,
 }) => {
-  const { data, isLoading, error } = useCryptoPriceChange(cryptoId);
+  const { data, isLoading, error, refetch } = useCryptoPriceChange(cryptoId);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error) return <ErrorState text="Error loading data" onRetry={refetch} />;
 
   const series = [data[cryptoId].usd_24h_change];
   const options = {

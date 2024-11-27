@@ -4,6 +4,8 @@ import { useMarketCapData } from "../../hooks/useCryptoData";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DropdownSelect from "../DropdownSelect/DropdownSelect";
 import { Button } from "../ui/button";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface MarketCapProps {
   currency: string;
@@ -23,7 +25,7 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
     setFinalSelectedFruits(selectedFruits);
   };
 
-  const { data, isLoading, error } = useMarketCapData(
+  const { data, isLoading, error, refetch } = useMarketCapData(
     currency,
     finalSelectedFruits
   );
@@ -88,8 +90,11 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
 
   const options = getCryptoListFromLocalStorage();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading market cap data</p>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error)
+    return (
+      <ErrorState text="Error loading market cap data" onRetry={refetch} />
+    );
 
   return (
     <Card>

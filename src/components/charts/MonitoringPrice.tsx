@@ -2,6 +2,8 @@ import React from "react";
 import { useCryptoMarketData } from "../../hooks/useCryptoData";
 import Chart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
+import { ErrorState } from "../ErrorState/ErrorState";
 
 interface MonitoringPriceProps {
   cryptoId: string;
@@ -14,14 +16,17 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
   currency,
   days,
 }) => {
-  const { data, error, isLoading } = useCryptoMarketData(
+  const { data, error, isLoading, refetch } = useCryptoMarketData(
     cryptoId,
     currency,
     days
   );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (isLoading) return <BoxSkeleton />;
+  if (error)
+    return (
+      <ErrorState text="Error Monitoring Price Component" onRetry={refetch} />
+    );
 
   const options = {
     chart: {
