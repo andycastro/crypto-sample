@@ -1,13 +1,8 @@
 import {
-  getCryptoPrice,
   getCryptoMarketChart,
   getCryptoList,
   getSupportedVsCurrencies,
 } from "../configs/crypto/axiosConfig";
-
-export const fetchCryptoPrice = async (cryptoId: string, currency: string) => {
-  return await getCryptoPrice(cryptoId, currency);
-};
 
 export const fetchCryptoMarketData = async (
   cryptoId: string,

@@ -1,16 +1,9 @@
 import { useQuery } from "react-query";
 import {
-  getCryptoPriceUseCase,
   getCryptoMarketDataUseCase,
   getCryptoListUseCase,
   getSupportedVsCurrenciesUseCase,
 } from "../useCases/cryptoUseCase";
-
-export const useCryptoPrice = (cryptoId: string, currency: string) => {
-  return useQuery(["cryptoPrice", cryptoId, currency], () =>
-    getCryptoPriceUseCase(cryptoId, currency)
-  );
-};
 
 export const useCryptoMarketData = (
   cryptoId: string,
@@ -21,7 +14,7 @@ export const useCryptoMarketData = (
     ["cryptoMarketData", cryptoId, currency, days],
     () => getCryptoMarketDataUseCase(cryptoId, currency, days),
     {
-      refetchInterval: 5000,
+      //refetchInterval: 5000, //voltar para 5 segundos
     }
   );
 };
