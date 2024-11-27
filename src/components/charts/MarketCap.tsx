@@ -46,21 +46,22 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
         (coin: { name: string; market_cap: number }) => coin.market_cap
       );
 
-      setChartConfig({
+      setChartConfig((prevConfig) => ({
+        ...prevConfig,
         series: [
           {
             data: seriesData,
           },
         ],
         options: {
-          ...chartConfig.options,
+          ...prevConfig.options,
           xaxis: {
             categories,
           },
         },
-      });
+      }));
     }
-  }, [data, chartConfig.options]);
+  }, [data]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading market cap data</p>;
