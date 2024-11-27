@@ -1,13 +1,25 @@
 import { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
 import { Sun, Moon } from "lucide-react";
+import { AvatarBox } from "../AvatarBox/AvatarBox";
+import { DrawerBottom } from "../DrawerBottom/DrawerBottom";
+import { Button } from "../ui/button";
+import { DrawerClose } from "../ui/drawer";
+import { Input } from "../ui/input";
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedMode = localStorage.getItem("darkMode");
     return savedMode ? JSON.parse(savedMode) : false;
   });
+
+  const [profilePicture, setProfilePicture] = useState(() => {
+    return localStorage.getItem("profilePicture") || "";
+  });
+
+  const [inputValue, setInputValue] = useState(profilePicture);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -21,6 +33,16 @@ export const Header = () => {
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem("profilePicture", inputValue);
+    setProfilePicture(inputValue);
+    setDrawerOpen(false);
   };
 
   return (
@@ -44,13 +66,43 @@ export const Header = () => {
               </div>
             )}
           </button>
-          <Avatar>
-            <AvatarImage
-              src="https://github.com/andycastro.png"
-              alt="@andycastro"
+
+          <DrawerBottom
+            trigger={
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setDrawerOpen(true)}
+                className="cursor-pointer"
+              >
+                <AvatarBox />
+              </div>
+            }
+            title="Altere a sua foto do avatar"
+            description="Utilize o input abaixo para alterar a sua foto do avatar."
+            footerButtons={
+              <>
+                <Button onClick={handleSubmit}>Submit</Button>
+                <DrawerClose asChild>
+                  <Button
+                    variant="outline"
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                </DrawerClose>
+              </>
+            }
+            open={drawerOpen}
+            onOpenChange={setDrawerOpen}
+          >
+            <Input
+              type="url"
+              placeholder="Profile Github URL"
+              value={inputValue}
+              onChange={handleInputChange}
             />
-            <AvatarFallback>AC</AvatarFallback>
-          </Avatar>
+          </DrawerBottom>
         </div>
       </div>
     </header>
