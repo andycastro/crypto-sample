@@ -35,11 +35,14 @@ export const getTopGainingCoins = async (currency: string) => {
   return response.data;
 };
 
-export const getMarketCapData = async (currency: string) => {
+export const getMarketCapData = async (currency: string, cryptoIds: string) => {
+  const defaultCryptoIds = "bitcoin,ethereum,cardano,tether,ethereum";
+  const ids = cryptoIds || defaultCryptoIds;
+
   const response = await axiosInstance.get("coins/markets", {
     params: {
       vs_currency: currency,
-      ids: "bitcoin,ethereum,cardano",
+      ids,
       order: "market_cap_desc",
     },
   });

@@ -9,16 +9,30 @@ export const FilterBar = ({
   cryptoList,
   selectedCrypto,
 }: FilterBarProps) => {
-  const handleDayChange = (value: string | number) => {
-    selectedDay.setValue(Number(value));
+  const handleDayChange = (value: string | number | (string | number)[]) => {
+    if (Array.isArray(value)) {
+      selectedDay.setValue(Number(value[0]));
+    } else {
+      selectedDay.setValue(Number(value));
+    }
   };
 
-  const handleCurrencyChange = (value: string | number) => {
-    selectedCurrency.setValue(String(value));
+  const handleCurrencyChange = (
+    value: string | number | (string | number)[]
+  ) => {
+    if (Array.isArray(value)) {
+      selectedCurrency.setValue(String(value[0]));
+    } else {
+      selectedCurrency.setValue(String(value));
+    }
   };
 
-  const handleCryptoChange = (value: string | number) => {
-    selectedCrypto.setValue(String(value));
+  const handleCryptoChange = (value: string | number | (string | number)[]) => {
+    if (Array.isArray(value)) {
+      selectedCrypto.setValue(String(value[0]));
+    } else {
+      selectedCrypto.setValue(String(value));
+    }
   };
   return (
     <>

@@ -28,8 +28,11 @@ export const fetchTopGainingCoins = async (currency: string) => {
   return await getTopGainingCoins(currency);
 };
 
-export const fetchMarketCapData = async (currency: string) => {
-  return await getMarketCapData(currency);
+export const fetchMarketCapData = async (
+  currency: string,
+  cryptoIds: string
+) => {
+  return await getMarketCapData(currency, cryptoIds);
 };
 
 export const fetchCryptoPriceChange = async (cryptoId: string) => {

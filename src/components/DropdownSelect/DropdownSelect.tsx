@@ -20,8 +20,9 @@ import {
 interface DropdownSelectProps {
   label: string;
   options: { label: string; value: string | number }[];
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value: string | number | (string | number)[];
+  onChange: (value: string | number | (string | number)[]) => void;
+  isMultiSelect?: boolean;
 }
 
 const DropdownSelect: React.FC<DropdownSelectProps> = ({
@@ -29,13 +30,32 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
   options,
   value,
   onChange,
+  isMultiSelect = false,
 }) => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredOptions = options.filter(
+    (option) =>
+      option.label &&
+      option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSelect = (selectedValue: string | number) => {
+    if (isMultiSelect) {
+      const newValue = Array.isArray(value)
+        ? value.includes(selectedValue)
+          ? value.filter((v) => v !== selectedValue)
+          : value.length < 5
+          ? [...value, selectedValue]
+          : value
+        : [selectedValue];
+      onChange(newValue);
+    } else {
+      onChange(selectedValue === value ? "" : selectedValue);
+      setOpen(false);
+    }
+  };
 
   const Row = ({
     index,
@@ -45,20 +65,19 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     style: React.CSSProperties;
   }) => {
     const option = filteredOptions[index];
+    const isSelected = isMultiSelect
+      ? Array.isArray(value) && value.includes(option.value)
+      : value === option.value;
+
     return (
       <div style={style} key={option.value}>
         <CommandItem
           value={option.value.toString()}
-          onSelect={(currentValue) => {
-            onChange(currentValue === value.toString() ? "" : currentValue);
-            setOpen(false);
-          }}
+          onSelect={() => handleSelect(option.value)}
         >
           {option.label}
           <Check
-            className={`ml-auto ${
-              value === option.value ? "opacity-100" : "opacity-0"
-            }`}
+            className={`ml-auto ${isSelected ? "opacity-100" : "opacity-0"}`}
           />
         </CommandItem>
       </div>
@@ -72,12 +91,28 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full max-w-[200px] justify-between"
+          className="w-full max-w-[250px] justify-between"
         >
-          {value
-            ? options.find((option) => option.value === value)?.label
-            : label}
-          <ChevronsUpDown className="opacity-50" />
+          <div className="overflow-hidden w-full">
+            <div className="flex justify-between">
+              <div className="flex-1">
+                {isMultiSelect
+                  ? Array.isArray(value) && value.length > 0
+                    ? value
+                        .map(
+                          (val) =>
+                            options.find((option) => option.value === val)
+                              ?.label
+                        )
+                        .join(", ")
+                    : label
+                  : value
+                  ? options.find((option) => option.value === value)?.label
+                  : label}
+              </div>
+              <ChevronsUpDown className="opacity-50 ml-2" />
+            </div>
+          </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-[200px] p-0">

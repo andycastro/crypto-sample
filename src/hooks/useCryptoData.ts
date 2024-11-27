@@ -57,10 +57,10 @@ export const useTopGainingCoins = (currency: string) => {
   );
 };
 
-export const useMarketCapData = (currency: string) => {
+export const useMarketCapData = (currency: string, cryptoIds: string) => {
   return useQuery(
-    ["marketCapData", currency],
-    () => getMarketCapDataUseCase(currency),
+    ["marketCapData", currency, cryptoIds],
+    () => getMarketCapDataUseCase(currency, cryptoIds),
     {
       refetchOnWindowFocus: false,
     }

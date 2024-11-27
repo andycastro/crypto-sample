@@ -1,16 +1,34 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useMarketCapData } from "../../hooks/useCryptoData";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import DropdownSelect from "../DropdownSelect/DropdownSelect";
+import { Button } from "../ui/button";
 
 interface MarketCapProps {
   currency: string;
 }
 
 export const MarketCap = ({ currency }: MarketCapProps) => {
-  const { data, isLoading, error } = useMarketCapData(currency);
+  const [selectedFruits, setSelectedFruits] = useState<string>("");
+  const [finalSelectedFruits, setFinalSelectedFruits] = useState<string>("");
 
-  const [chartConfig, setChartConfig] = React.useState({
+  const handleSelectChange = (value: string | number | (string | number)[]) => {
+    const selectedArray = Array.isArray(value) ? value : [value];
+    const selectedString = selectedArray.join(",");
+    setSelectedFruits(selectedString);
+  };
+
+  const handleButtonClick = () => {
+    setFinalSelectedFruits(selectedFruits);
+  };
+
+  const { data, isLoading, error } = useMarketCapData(
+    currency,
+    finalSelectedFruits
+  );
+
+  const [chartConfig, setChartConfig] = useState({
     series: [
       {
         data: [] as number[],
@@ -37,7 +55,7 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) {
       const categories = data.map(
         (coin: { name: string; market_cap: number }) => coin.name
@@ -63,6 +81,13 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
     }
   }, [data]);
 
+  const getCryptoListFromLocalStorage = () => {
+    const storedList = localStorage.getItem("cryptoList");
+    return storedList ? JSON.parse(storedList) : [];
+  };
+
+  const options = getCryptoListFromLocalStorage();
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading market cap data</p>;
 
@@ -70,6 +95,18 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
     <Card>
       <CardHeader>
         <CardTitle>Comparação de Market Cap</CardTitle>
+        <div className="flex justify-between items-center">
+          <div className="flex-1 overflow-hidden">
+            <DropdownSelect
+              label="Moedas"
+              options={options}
+              isMultiSelect={true}
+              value={selectedFruits.split(",")}
+              onChange={handleSelectChange}
+            />
+          </div>
+          <Button onClick={handleButtonClick}>Atualizar</Button>
+        </div>
       </CardHeader>
       <CardContent>
         <ReactApexChart

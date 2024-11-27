@@ -65,9 +65,12 @@ export const getTopGainingCoinsUseCase = async (currency: string) => {
   }
 };
 
-export const getMarketCapDataUseCase = async (currency: string) => {
+export const getMarketCapDataUseCase = async (
+  currency: string,
+  cryptoIds: string
+) => {
   try {
-    const marketCapData = await fetchMarketCapData(currency);
+    const marketCapData = await fetchMarketCapData(currency, cryptoIds);
     return marketCapData;
   } catch (error) {
     console.error("Erro ao obter dados de capitalização de mercado:", error);
