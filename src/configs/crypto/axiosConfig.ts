@@ -45,3 +45,14 @@ export const getMarketCapData = async (currency: string) => {
   });
   return response.data;
 };
+
+export const getCryptoPriceChange = async (cryptoId: string) => {
+  const response = await axiosInstance.get("simple/price", {
+    params: {
+      ids: cryptoId,
+      vs_currencies: "usd",
+      include_24hr_change: true,
+    },
+  });
+  return response.data;
+};

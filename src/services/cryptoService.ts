@@ -6,6 +6,8 @@ import {
   getMarketCapData,
 } from "../configs/crypto/axiosConfig";
 
+import { getCryptoPriceChange } from "../configs/crypto/axiosConfig";
+
 export const fetchCryptoMarketData = async (
   cryptoId: string,
   currency: string,
@@ -28,4 +30,8 @@ export const fetchTopGainingCoins = async (currency: string) => {
 
 export const fetchMarketCapData = async (currency: string) => {
   return await getMarketCapData(currency);
+};
+
+export const fetchCryptoPriceChange = async (cryptoId: string) => {
+  return await getCryptoPriceChange(cryptoId);
 };

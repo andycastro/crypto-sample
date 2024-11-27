@@ -4,6 +4,7 @@ import {
   fetchSupportedVsCurrencies,
   fetchTopGainingCoins,
   fetchMarketCapData,
+  fetchCryptoPriceChange,
 } from "../services/cryptoService";
 
 export const getCryptoMarketDataUseCase = async (
@@ -70,6 +71,16 @@ export const getMarketCapDataUseCase = async (currency: string) => {
     return marketCapData;
   } catch (error) {
     console.error("Erro ao obter dados de capitalização de mercado:", error);
+    throw error;
+  }
+};
+
+export const getCryptoPriceChangeUseCase = async (cryptoId: string) => {
+  try {
+    const priceChangeData = await fetchCryptoPriceChange(cryptoId);
+    return priceChangeData;
+  } catch (error) {
+    console.error("Erro ao obter variação de preço:", error);
     throw error;
   }
 };
