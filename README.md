@@ -116,3 +116,8 @@ Foram adicionados componentes de skeletons e ErrorState com botões de retry par
 
 ## Demo
 https://github.com/user-attachments/assets/880309c1-1a25-41c2-a90c-513a650120ce
+
+
+
+https://github.com/user-attachments/assets/377800df-a00c-4652-9572-7164356032a5
+
