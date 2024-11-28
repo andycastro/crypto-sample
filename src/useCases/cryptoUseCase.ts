@@ -40,7 +40,6 @@ export const getCryptoMarketDataUseCase = async (
       `cryptoMarketData_${cryptoId}_${currency}_${days}`
     );
     if (storedData) {
-      console.log("Usando dados do local storage como fallback");
       localStorage.setItem("storedDataCryptoMarketData", "true");
       return JSON.parse(storedData);
     }
@@ -68,7 +67,6 @@ export const getCryptoListUseCase = async () => {
 
     const storedCryptoList = localStorage.getItem("cryptoList");
     if (storedCryptoList) {
-      console.log("Usando dados do local storage como fallback");
       localStorage.setItem("storedDataCryptoList", "true");
       return JSON.parse(storedCryptoList);
     }
@@ -116,7 +114,6 @@ export const getTopGainingCoinsUseCase = async (currency: string) => {
 
     const storedCoins = localStorage.getItem(`topGainingCoins_${currency}`);
     if (storedCoins) {
-      console.log("Usando dados do local storage como fallback");
       localStorage.setItem("storedDataTopGainingCoins", "true");
       return JSON.parse(storedCoins);
     }
@@ -172,7 +169,6 @@ export const getCryptoPriceChangeUseCase = async (cryptoId: string) => {
 
     const storedData = localStorage.getItem(`cryptoPriceChange_${cryptoId}`);
     if (storedData) {
-      console.log("Usando dados do local storage como fallback");
       localStorage.setItem("storedDataCryptoPriceChange", "true");
       return JSON.parse(storedData);
     }

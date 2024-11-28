@@ -25,10 +25,6 @@ export const Dashboard = () => {
   const { data: supportedCurrencies, isLoading: isCurrenciesLoading } =
     useSupportedVsCurrencies();
 
-  if (isCryptoListLoading || isCurrenciesLoading) return <MainSkeleton />;
-  if (cryptoListError)
-    return <ErrorState text="Error loading crypto list" onRetry={refetch} />;
-
   const currencyOptions =
     supportedCurrencies?.map((currency: string) => ({
       label: currency.toUpperCase(),
@@ -41,12 +37,16 @@ export const Dashboard = () => {
     { label: "Últimos 90 dias", value: 90 },
   ];
 
+  if (isCryptoListLoading || isCurrenciesLoading) return <MainSkeleton />;
+  if (cryptoListError)
+    return <ErrorState text="Error loading crypto list" onRetry={refetch} />;
+
   return (
     <MainLayout>
       <div className="py-6">
         <TitlePage
           title="Dashboard"
-          subtitle="Welcome to the Crypto Fetching Dashboard."
+          subtitle="Bem-vindo ao Crypto Fetching Dashboard."
         />
 
         <div className="py-6">

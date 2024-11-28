@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -48,9 +47,9 @@ export function DrawerBottom({
           <DrawerFooter>
             {footerButtons || (
               <>
-                <Button onClick={onSubmit}>Submit</Button>
+                <Button onClick={onSubmit}>Enviar</Button>
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="outline">Cancelar</Button>
                 </DrawerClose>
               </>
             )}

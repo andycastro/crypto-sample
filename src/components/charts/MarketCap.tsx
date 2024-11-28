@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
 import { ErrorState } from "../ErrorState/ErrorState";
 import { Badge } from "../ui/badge";
+import { chartConfigMarketCap } from "./config";
 
 interface MarketCapProps {
   currency: string;
@@ -32,32 +33,7 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
     finalSelectedList
   );
 
-  const [chartConfig, setChartConfig] = useState({
-    series: [
-      {
-        data: [] as number[],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar" as const,
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 4,
-          borderRadiusApplication: "end" as const,
-          horizontal: true,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      xaxis: {
-        categories: [] as string[],
-      },
-    },
-  });
+  const [chartConfig, setChartConfig] = useState(chartConfigMarketCap);
 
   useEffect(() => {
     if (data) {

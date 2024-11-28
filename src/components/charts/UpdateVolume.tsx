@@ -5,6 +5,7 @@ import { useCryptoMarketData } from "../../hooks/useCryptoData";
 import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
 import { ErrorState } from "../ErrorState/ErrorState";
 import { Badge } from "../ui/badge";
+import { chartUpdateVolume } from "./config";
 
 interface UpdateVolumeProps {
   cryptoId: string;
@@ -25,43 +26,7 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
   const isStoredData =
     localStorage.getItem("storedDataCryptoMarketData") === "true";
 
-  const [chartData, setChartData] = useState({
-    series: [
-      {
-        name: "Volume",
-        data: [],
-      },
-    ],
-    options: {
-      chart: {
-        type: "line" as const,
-        height: 350,
-      },
-      stroke: {
-        curve: "stepline" as const,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      title: {
-        text: "Stepline Chart",
-        align: "left" as const,
-      },
-      markers: {
-        hover: {
-          sizeOffset: 4,
-        },
-      },
-      xaxis: {
-        type: "datetime" as const,
-      },
-      yaxis: {
-        title: {
-          text: "Volume",
-        },
-      },
-    },
-  });
+  const [chartData, setChartData] = useState(chartUpdateVolume);
 
   useEffect(() => {
     if (data) {
