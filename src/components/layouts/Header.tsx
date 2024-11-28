@@ -88,7 +88,7 @@ export const Header = () => {
                     variant="outline"
                     onClick={() => setDrawerOpen(false)}
                   >
-                    Cancel
+                    Cancelar
                   </Button>
                 </DrawerClose>
               </>

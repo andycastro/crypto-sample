@@ -16,10 +16,6 @@ export const chartUpdateVolume = {
     dataLabels: {
       enabled: false,
     },
-    title: {
-      text: "Stepline Chart",
-      align: "left" as const,
-    },
     markers: {
       hover: {
         sizeOffset: 4,

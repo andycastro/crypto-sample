@@ -46,7 +46,7 @@ export const Dashboard = () => {
       <div className="py-6">
         <TitlePage
           title="Dashboard"
-          subtitle="Welcome to the Crypto Fetching Dashboard."
+          subtitle="Bem-vindo ao Crypto Fetching Dashboard."
         />
 
         <div className="py-6">
