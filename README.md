@@ -113,3 +113,6 @@ No gráfico *Comparação de Market Cap* foi adicionado um multipleSelect com bu
 
 ## Skeleton e ErrorState para transparência com os usuários
 Foram adicionados componentes de skeletons e ErrorState com botões de retry para maior transparência e controle para os usuários.
+
+## Demo
+https://github.com/user-attachments/assets/880309c1-1a25-41c2-a90c-513a650120ce
