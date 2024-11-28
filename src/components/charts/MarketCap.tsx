@@ -6,28 +6,30 @@ import DropdownSelect from "../DropdownSelect/DropdownSelect";
 import { Button } from "../ui/button";
 import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
 import { ErrorState } from "../ErrorState/ErrorState";
+import { Badge } from "../ui/badge";
 
 interface MarketCapProps {
   currency: string;
 }
 
 export const MarketCap = ({ currency }: MarketCapProps) => {
-  const [selectedFruits, setSelectedFruits] = useState<string>("");
-  const [finalSelectedFruits, setFinalSelectedFruits] = useState<string>("");
+  const [selectedList, setSelectedList] = useState<string>("");
+  const [finalSelectedList, setFinalSelectedList] = useState<string>("");
+  const isStoredData = localStorage.getItem("storedDataMarketCap") === "true";
 
   const handleSelectChange = (value: string | number | (string | number)[]) => {
     const selectedArray = Array.isArray(value) ? value : [value];
     const selectedString = selectedArray.join(",");
-    setSelectedFruits(selectedString);
+    setSelectedList(selectedString);
   };
 
   const handleButtonClick = () => {
-    setFinalSelectedFruits(selectedFruits);
+    setFinalSelectedList(selectedList);
   };
 
   const { data, isLoading, error, refetch } = useMarketCapData(
     currency,
-    finalSelectedFruits
+    finalSelectedList
   );
 
   const [chartConfig, setChartConfig] = useState({
@@ -99,14 +101,21 @@ export const MarketCap = ({ currency }: MarketCapProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Comparação de Market Cap</CardTitle>
+        <div className="flex items-center space-x-2">
+          <CardTitle>Comparação de Market Cap</CardTitle>
+          {isStoredData && (
+            <Badge variant="outline" className="bg-red-500 text-white">
+              Dados provenientes do cache
+            </Badge>
+          )}
+        </div>
         <div className="flex justify-between items-center">
           <div className="flex-1 overflow-hidden">
             <DropdownSelect
               label="Moedas"
               options={options}
               isMultiSelect={true}
-              value={selectedFruits.split(",")}
+              value={selectedList.split(",")}
               onChange={handleSelectChange}
             />
           </div>

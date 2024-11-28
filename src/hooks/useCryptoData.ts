@@ -18,6 +18,7 @@ export const useCryptoMarketData = (
     () => getCryptoMarketDataUseCase(cryptoId, currency, days),
     {
       refetchOnWindowFocus: false,
+      refetchInterval: 5000,
     }
   );
 };

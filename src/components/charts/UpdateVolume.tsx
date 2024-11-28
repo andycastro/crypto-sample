@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCryptoMarketData } from "../../hooks/useCryptoData";
 import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
 import { ErrorState } from "../ErrorState/ErrorState";
+import { Badge } from "../ui/badge";
 
 interface UpdateVolumeProps {
   cryptoId: string;
@@ -21,6 +22,8 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
     currency,
     days
   );
+  const isStoredData =
+    localStorage.getItem("storedDataCryptoMarketData") === "true";
 
   const [chartData, setChartData] = useState({
     series: [
@@ -83,7 +86,14 @@ export const UpdateVolume: React.FC<UpdateVolumeProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Volume de negociação {cryptoId.toUpperCase()}</CardTitle>
+        <div className="flex items-center space-x-2">
+          <CardTitle>Volume de negociação {cryptoId.toUpperCase()}</CardTitle>
+          {isStoredData && (
+            <Badge variant="outline" className="bg-red-500 text-white">
+              Dados provenientes do cache
+            </Badge>
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         <div id="chart">

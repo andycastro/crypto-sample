@@ -4,6 +4,7 @@ import Chart from "react-apexcharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BoxSkeleton } from "../Skeleton/BoxSkeleton";
 import { ErrorState } from "../ErrorState/ErrorState";
+import { Badge } from "../ui/badge";
 
 interface MonitoringPriceProps {
   cryptoId: string;
@@ -21,6 +22,8 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
     currency,
     days
   );
+  const isStoredData =
+    localStorage.getItem("storedDataCryptoMarketData") === "true";
 
   if (isLoading) return <BoxSkeleton />;
   if (error)
@@ -66,7 +69,14 @@ export const MonitoringPrice: React.FC<MonitoringPriceProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Preço atualizado do {cryptoId.toUpperCase()}</CardTitle>
+        <div className="flex items-center space-x-2">
+          <CardTitle>Preço atualizado do {cryptoId.toUpperCase()}</CardTitle>
+          {isStoredData && (
+            <Badge variant="outline" className="bg-red-500 text-white">
+              Dados provenientes do cache
+            </Badge>
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         <Chart options={options} series={series} type="line" />
